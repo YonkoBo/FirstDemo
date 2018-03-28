@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Battleships.Models
 {
@@ -10,14 +8,21 @@ namespace Battleships.Models
     {
         private Board GameBoard { get; set; }
         public int ShipsHitCount { get; set; }
-        public bool GameFinished => ShipsHitCount >= 9;
+        public double TimePlayed { get; set; }
+        public int Score = 81;
+
+        public bool GameFinished => ShipsHitCount >= 2;
 
         public Game()
         {
             GameBoard = new Board(new Grid[GameSettings.BoardWidht, GameSettings.BoardHeight]);
         }
+
+        #region GameMethods
         public void Run()
         {
+            Stopwatch stopWatch = new Stopwatch();//Used fro tracking time played.
+            stopWatch.Start(); //Starting the timer.
             while (!GameFinished)
             {
                 Draw();
@@ -29,11 +34,15 @@ namespace Battleships.Models
                     {
                         ShipsHitCount++;
                     }
+                    else
+                    {
+                        Score--;
+                    }
                 }
                 catch
                 {
                     Console.Clear();
-                    Console.WriteLine("Error: Please enter numbers between 0 and 9. (Inclusive)");
+                    Console.WriteLine("Error: Please enter numbers between 0 and 8!");
                     Console.ReadLine();
                 }
             }
@@ -41,6 +50,8 @@ namespace Battleships.Models
             {
                 Draw();
                 Console.WriteLine("Game Complete");
+                stopWatch.Stop();//Stopping the timer.
+                TimePlayed = Math.Round(stopWatch.Elapsed.TotalMinutes); //Indicating time played.
                 Console.ReadLine();
             }
         }
@@ -49,5 +60,6 @@ namespace Battleships.Models
             Console.Clear();
             GameBoard.Draw();
         }
+        #endregion
     }
 }

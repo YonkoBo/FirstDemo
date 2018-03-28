@@ -15,6 +15,7 @@ namespace Battleships.Models
             PopulateBoardShips();
         }
 
+        #region BoardMethods
         private void InitializeBoard()
         {
             for (int x = 0; x < Grid.GetLength(0); x++)
@@ -34,25 +35,25 @@ namespace Battleships.Models
             //1 of length 2
             SetGrid(1, 2);
             SetGrid(2, 2);
-            //2 of length 3
-            SetGrid(4, 3);
-            SetGrid(4, 4);
-            SetGrid(4, 5);
+            ////2 of length 3
+            //SetGrid(4, 3);
+            //SetGrid(4, 4);
+            //SetGrid(4, 5);
 
-            SetGrid(5, 0);
-            SetGrid(6, 0);
-            SetGrid(7, 0);
-            //1 of length 4
-            SetGrid(0, 8);
-            SetGrid(1, 8);
-            SetGrid(2, 8);
-            SetGrid(3, 8);
-            //1 of length 5
-            SetGrid(7, 4);
-            SetGrid(7, 5);
-            SetGrid(7, 6);
-            SetGrid(7, 7);
-            SetGrid(7, 8);
+            //SetGrid(5, 0);
+            //SetGrid(6, 0);
+            //SetGrid(7, 0);
+            ////1 of length 4
+            //SetGrid(0, 8);
+            //SetGrid(1, 8);
+            //SetGrid(2, 8);
+            //SetGrid(3, 8);
+            ////1 of length 5
+            //SetGrid(7, 4);
+            //SetGrid(7, 5);
+            //SetGrid(7, 6);
+            //SetGrid(7, 7);
+            //SetGrid(7, 8);
         }
 
         /// <summary>
@@ -135,5 +136,6 @@ namespace Battleships.Models
         {
             return Grid[x, y];
         }
+        #endregion
     }
 }
