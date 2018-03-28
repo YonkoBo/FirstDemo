@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.IO;
 
 namespace Battleships
@@ -14,15 +11,16 @@ namespace Battleships
         const string path = @"E:\SoftServe\BattleshipFiles\";
         static void Main(string[] args)
         {
-
-            IEnumerable<string> allFiles = GetAllFiles(path);
-            IEnumerable<BattleshipJsonObject> score = GetScores(allFiles);
-            var sortedData = BubbleSortByScore(score);
-            foreach (var item in sortedData)
-            {
-                Console.WriteLine(string.Format("{0}, {1}, {2}, {3}", item.Id, item.PlayedTime, item.UserName, item.Score));
-                Console.WriteLine();
-            }
+            Game game = new Game();
+            game.Run();
+            //IEnumerable<string> allFiles = GetAllFiles(path);
+            //IEnumerable<BattleshipJsonObject> score = GetScores(allFiles);
+            //var sortedData = BubbleSortByScore(score);
+            //foreach (var item in sortedData)
+            //{
+            //    Console.WriteLine(string.Format("{0}, {1}, {2}, {3}", item.Id, item.PlayedTime, item.UserName, item.Score));
+            //    Console.WriteLine();
+            //}
         }
 
         public static IEnumerable<string> GetAllFiles(string path)

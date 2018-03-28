@@ -45,6 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\BattleshipJsonObject.cs" />
+    <Compile Include="Models\Board.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameSettings.cs" />
+    <Compile Include="Models\Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
