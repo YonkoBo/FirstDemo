@@ -3,37 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Battleships.Logic.Contracts;
+using Battleships.Logic;
 
 namespace Battleships
 {
     class Program
     {
-        const string path = @"E:\SoftServe\BattleshipFiles\";
+        //const string path = @"E:\SoftServe\BattleshipFiles\";
         static void Main(string[] args)
         {
-            Console.Title = "Battleships";
-            Console.WriteLine("Please enter your name:");
-            string playerName = Console.ReadLine();
+            IInterface userInterface = new ConsoleInterface();
+            IRender renderer = new ConsoleRender();
+            IGameInitializationStrategy gameInitializationStrategy = new GameInitializationStrategy();
+            Engine gameEngine = new Engine(renderer, userInterface, gameInitializationStrategy);
 
-            Game game = new Game();
-            game.Run();
-
-            double timePlayed = game.TimePlayed;
-            int playerScore = game.Score;
-
-            CreateNewFile(path, playerName, timePlayed, playerScore);
-
-            IEnumerable<string> allFiles = GetAllFiles(path);
-            IEnumerable<BattleshipJsonObject> mappedData = MapFilesToBattleshipObject(allFiles);
-
-            SortingAlgorithms sorting = new SortingAlgorithms();
-            var sortedData = sorting.BubbleSortByScore(mappedData);
-            Console.WriteLine("Sorting Data using Buble Sort.");
-            foreach (var item in sortedData)
-            {
-                Console.WriteLine(string.Format("ID:{0},Time Played:{1},Player Name:{2},Score:{3}", item.Id, item.PlayedTime, item.UserName, item.Score));
-                Console.WriteLine();
-            }
+            gameEngine.Run();
         }
         #region Methods
         /// <summary>
