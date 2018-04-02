@@ -5,9 +5,6 @@ namespace Battleships.Models
 {
     public class SortingAlgorithms
     {
-        public SortingAlgorithms()
-        {
-        }
         /// <summary>
         /// Swapping values from given array.
         /// </summary>
@@ -15,7 +12,7 @@ namespace Battleships.Models
         /// <param name="arr"></param>
         /// <param name="i"></param>
         /// <param name="j"></param>
-        private void Swap<T>(T[] arr, int i, int j)
+        private static void Swap<T>(T[] arr, int i, int j)
         {
             T temp = arr[i];
             arr[i] = arr[j];
@@ -27,7 +24,7 @@ namespace Battleships.Models
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public IEnumerable<BattleshipJsonObject> BubbleSortByScore(IEnumerable<BattleshipJsonObject> list)
+        public static IEnumerable<PlayerData> BubbleSortByScore(IEnumerable<PlayerData> list)
         {
             var arr = list.ToArray();
 

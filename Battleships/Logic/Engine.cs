@@ -1,9 +1,12 @@
 ﻿using Battleships.Common;
 using Battleships.Logic.Contracts;
+using Battleships.Logic.Factory;
 using Battleships.Models;
 using Battleships.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 
 namespace Battleships.Logic
 {
@@ -20,6 +23,8 @@ namespace Battleships.Logic
         private GameStatus gameStatus;
         private Position shotPosition;
         private int totalAttempts;
+        private List<PlayerData> playerData;
+        private PlayerFactory playerFactory;
 
         public Engine(IRender renderer, IInterface userInterface, IGameInitializationStrategy gameInitializationStrategy)
         {
@@ -31,6 +36,8 @@ namespace Battleships.Logic
             this.visibleGrid = new Grid();
             this.totalAttempts = 0;
             this.gameStatus = GameStatus.Play;
+            this.playerFactory = new PlayerFactory();
+            this.playerData = LoadData();
         }
 
         public IList<IShip> Ships
@@ -41,8 +48,42 @@ namespace Battleships.Logic
             }
         }
 
+        public List<PlayerData> LoadData() //Loading all existing files from given path
+        {
+            List<PlayerData> playerData = new List<PlayerData>();
+            IEnumerable<string> files = Directory.EnumerateFiles(GlobalConstants.Path, "*.json");
+            foreach (var file in files)
+            {
+                PlayerData dataToAdd = ParsePlayerData(file);
+                playerData.Add(dataToAdd);
+            }
+            return playerData;
+        }
+        private PlayerData ParsePlayerData(string data) //Creating new object of type PlayerData.
+        {
+            string[] dataSplited = data.Split('_');
+            Guid id = new Guid(dataSplited[1]);
+            string playerName = dataSplited[2];
+            double timePlayed = double.Parse(dataSplited[3]);
+            int score = Int32.Parse(dataSplited[4]);
+
+            PlayerData playerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
+            return playerData;
+        }
+        public void CreateNewPlayerFile(string playerName, int timePlayed, int score) //Creats a new .json file in selected path.
+        {
+            Guid id = Guid.NewGuid();
+            PlayerData newPlayerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
+            string fileName = string.Format("{0}_{1}_{2}_{3}_{4}_.json", GlobalConstants.Path, newPlayerData.ID, newPlayerData.PlayerName, newPlayerData.TimePlayed, newPlayerData.Score);
+            File.Create(fileName);
+        }
         public void Run()
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
+            AskPlayerName(); // Asks user for Name.
+            string playerName = Console.ReadLine(); //Gets user unput.
+
             this.gameInitializationStrategy.Initialize(this.hiddenGrid, this.visibleGrid, this.ships);
             this.renderer.RenderGrid(this.visibleGrid);
             this.renderer.RenderMessage(GlobalConstants.EnterCoordinatesMsg);
@@ -74,10 +115,18 @@ namespace Battleships.Logic
 
                 if (this.gameStatus == GameStatus.End)
                 {
+                    timer.Stop();
+                    int timePlayed = timer.Elapsed.Minutes;
+                    int score = 100 - totalAttempts;
+                    CreateNewPlayerFile(playerName, timePlayed, score);
                     this.renderer.RenderStatusMessage(this.gameStatus.ToString());
                     this.ProcessGameEnd();
                 }
             }
+        }
+        private void AskPlayerName()
+        {
+            Console.WriteLine("Please Enter Player Name:");
         }
 
         private void ProcessCommand(UserCommands command)
@@ -97,12 +146,25 @@ namespace Battleships.Logic
                     this.shotPosition = this.userInterface.GetShotPositionFromInput();
                     this.ProcessShootCommand();
                     break;
+                case UserCommands.Bubblesort:
+                    this.ProcessBubbleSortCommand();
+                    break;
                 case UserCommands.Invalid:
                 default:
                     throw new InvalidOperationException(GlobalConstants.InvalidCommandMsg);
             }
         }
 
+        private void ProcessBubbleSortCommand()
+        {
+            Console.Clear();
+            Console.WriteLine("Sorting Data Using BubbbleSort");
+            IEnumerable<PlayerData> sortedData = SortingAlgorithms.BubbleSortByScore(this.playerData);
+            foreach (var data in sortedData)
+            {
+                Console.WriteLine(string.Format("ID:{0},Time Played:{1},Player Name:{2},Score:{3}", data.ID, data.TimePlayed, data.PlayerName, data.Score));
+            }
+        }
         private void ProcessShowCommand()
         {
             this.gameStatus = GameStatus.Show;

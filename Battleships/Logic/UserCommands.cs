@@ -7,6 +7,7 @@
         New,
         Shoot,
         Agree,
-        Invalid
+        Invalid,
+        Bubblesort
     }
 }

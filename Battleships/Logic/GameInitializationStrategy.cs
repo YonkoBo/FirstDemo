@@ -54,7 +54,7 @@ namespace Battleships.Logic
             {
                 for (int i = 0; i < shipType.Value; i++)
                 {
-                    ShipDirection direction = this.GetRandomShipDirection();
+                    ShipDirection direction = this.GetRandomShipDirection(); //Gets a ranodm ship direction
                     IShip ship = this.shipFactory.Get(shipType.Key.Name, direction);
                     Position topLeft = this.GetRandomShipPosition(ship.Size, direction);
 

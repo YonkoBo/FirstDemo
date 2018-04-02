@@ -2,6 +2,7 @@
 {
     public class GlobalConstants
     {
+        public const string Path = @"E:\SoftServe\BattleshipFiles\";
         public const char MinRowValueOnGrid = 'A';
         public const char MaxRowValueOnGrid = 'J';
         public const int MinRowValueOnGridAsciiCode = 65;
@@ -22,6 +23,7 @@
         public const string ShowCommand = "SHOW";
         public const string ExitCommand = "EXIT";
         public const string NewGameCommand = "NEW";
+        public const string BubbleSortCommand = "BUBBLESORT";
 
         public const string EnterCoordinatesMsg = "Enter coordinates (row, col), e.g. A5: ";
         public const string ExitMsg = "Are you sure you want to exit? Press {0} for yes, any other key to continue playing.";
@@ -31,7 +33,7 @@
         public const string InvalidRowMsg = "Row cannot be negative or exceed grid maximum rows.";
         public const string InvalidColMsg = "Column cannot be negative or exceed grid maximum columns.";
         public const string ShipNegativeSizeMsg = "Size cannot be negative.";
-        public const string InvalidCommandMsg = "Invalid command. Please enter \"show\", \"exit\", \"new\", or coordinates in the format \"A5\".";
+        public const string InvalidCommandMsg = "Invalid command. Please enter \"show\", \"exit\", \"new\",\"bubblesort\" or coordinates in the format \"A5\".";
         public const string InvalidShipHit = "The ship is already sunk.";
         public const string InvalidShipMsg = "You cannot create a non-existing ship.";
     }
