@@ -74,7 +74,7 @@ namespace Battleships.Logic
         {
             Guid id = Guid.NewGuid();
             PlayerData newPlayerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
-            string fileName = string.Format("{0}_{1}_{2}_{3}_{4}_.json", GlobalConstants.Path, newPlayerData.ID, newPlayerData.PlayerName, newPlayerData.TimePlayed, newPlayerData.Score);
+            string fileName = string.Format("_{0}_{1}_{2}_{3}_.json", newPlayerData.ID, newPlayerData.PlayerName, newPlayerData.TimePlayed, newPlayerData.Score);
             File.Create(fileName);
         }
         public void Run()
@@ -110,15 +110,15 @@ namespace Battleships.Logic
 
                 if (this.AreAllShipsSunk())
                 {
+                    timer.Stop();
+                    int timePlayed = timer.Elapsed.Minutes;
+                    int score = 100 - totalAttempts;
+                    CreateNewPlayerFile(playerName, timePlayed, score);
                     this.gameStatus = GameStatus.End;
                 }
 
                 if (this.gameStatus == GameStatus.End)
                 {
-                    timer.Stop();
-                    int timePlayed = timer.Elapsed.Minutes;
-                    int score = 100 - totalAttempts;
-                    CreateNewPlayerFile(playerName, timePlayed, score);
                     this.renderer.RenderStatusMessage(this.gameStatus.ToString());
                     this.ProcessGameEnd();
                 }

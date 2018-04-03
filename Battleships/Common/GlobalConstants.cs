@@ -2,7 +2,7 @@
 {
     public class GlobalConstants
     {
-        public const string Path = @"E:\SoftServe\BattleshipFiles\";
+        public const string Path = "./";
         public const char MinRowValueOnGrid = 'A';
         public const char MaxRowValueOnGrid = 'J';
         public const int MinRowValueOnGridAsciiCode = 65;
