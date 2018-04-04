@@ -26,14 +26,14 @@ namespace Battleships.Logic
 
         public Engine(IRender renderer, IInterface userInterface, IGameInitializationStrategy gameInitializationStrategy)
         {
-            this.renderer = renderer;
-            this.userInterface = userInterface;
-            this.gameInitializationStrategy = gameInitializationStrategy;
+            this.renderer = renderer; //Grid builder
+            this.userInterface = userInterface; // user interface.
+            this.gameInitializationStrategy = gameInitializationStrategy; //Types of ships
             this.ships = new List<IShip>();
             this.hiddenGrid = new Grid();
             this.visibleGrid = new Grid();
-            this.totalAttempts = 0;
-            this.gameStatus = GameStatus.Play;
+            this.totalAttempts = 0; //
+            this.gameStatus = GameStatus.Play; //Sets current gamestatus to Play.
             this.playerFactory = new PlayerFactory();
             this.playerData = LoadData();
         }
@@ -91,7 +91,7 @@ namespace Battleships.Logic
                 this.renderer.RenderStatusMessage(this.gameStatus.ToString());
 
                 UserCommands command = this.userInterface.GetCommandFromInput();
-                this.renderer.ClearError();
+                this.renderer.ClearError(); //Clears the console from the error message.
 
                 try
                 {

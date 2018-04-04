@@ -10,13 +10,13 @@ namespace Battleships
     {
         private string coordinates;
 
-        public string GetUserInput()
+        public string GetUserInput() //Gets user input
         {
             var input = Console.ReadLine();
             return input;
         }
 
-        public UserCommands GetCommandFromInput()
+        public UserCommands GetCommandFromInput() //Gets user input from console.
         {
             string input = this.GetUserInput().ToUpper();
 
@@ -35,7 +35,7 @@ namespace Battleships
                 case GlobalConstants.SelectionSortCommand:
                     return UserCommands.SelectionSort;
                 default:
-                    if (this.AreValidCoordinates(input))
+                    if (this.AreValidCoordinates(input)) //Validation for correct cordinates.
                     {
                         this.coordinates = input;
                         return UserCommands.Shoot;

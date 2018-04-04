@@ -25,7 +25,7 @@ namespace Battleships
             this.scene.Clear()
                 .Append(' ');
 
-            for (int i = 1; i <= GlobalConstants.GridColsCount; i++)
+            for (int i = 1; i <= GlobalConstants.GridColsCount; i++) //Drawing numbers for the grid coordinate system.
             {
                 string toAppend = i < 9 ? i.ToString(): i.ToString().Substring(i.ToString().Length - 1);
                 this.scene.Append(toAppend);
@@ -33,7 +33,7 @@ namespace Battleships
 
             this.scene.AppendLine();
 
-            for (int row = 0; row < grid.TotalRows; row++)
+            for (int row = 0; row < grid.TotalRows; row++) //Drawing the letters for the grid coordinate system.
             {
                 this.scene.Append((char)(GlobalConstants.MinRowValueOnGridAsciiCode + row));
 

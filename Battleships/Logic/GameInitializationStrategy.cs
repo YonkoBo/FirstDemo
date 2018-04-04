@@ -11,7 +11,7 @@ namespace Battleships.Logic
     {
         private static Random random;
 
-        private readonly Dictionary<Type, int> shipsType;
+        private readonly Dictionary<Type, int> shipsType; //Private filed with ship types
         private ShipFactory shipFactory;
 
         static GameInitializationStrategy()
@@ -57,6 +57,7 @@ namespace Battleships.Logic
                     ShipDirection direction = this.GetRandomShipDirection(); //Gets a ranodm ship direction
                     IShip ship = this.shipFactory.Get(shipType.Key.Name, direction); //Creates the ship using factory.
                     Position randomShipPosition = this.GetRandomShipPosition(ship.Size, direction); //Returns random Ship position.
+                    ship.ShipPosition = randomShipPosition;
 
                     while (this.ShipsOverlap(ship, grid)) //Checks if ships overlap.
                     {
@@ -64,7 +65,7 @@ namespace Battleships.Logic
                     }
 
                     this.AddShip(ship, ships);
-                    grid.PlaceShip(ship);
+                    grid.PlaceShip(ship); //Placing ships on the grid coordinate, depending on ship size and direction.
                 }
             }
         }
