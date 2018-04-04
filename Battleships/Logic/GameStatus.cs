@@ -8,6 +8,7 @@
         Sunk,
         Error,
         Show,
-        End
+        End,
+        Sorting
     }
 }

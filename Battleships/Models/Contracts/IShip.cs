@@ -8,7 +8,7 @@
 
         char Image { get; }
 
-        Position TopLeft { get; set; }
+        Position ShipPosition { get; set; }
 
         bool IsSunk { get; set; }
 

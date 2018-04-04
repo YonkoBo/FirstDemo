@@ -44,7 +44,7 @@ namespace Battleships.Models
 
         public static Position GetFromBattleshipBoard(char gridRow, string gridCol)
         {
-            int row = (int)gridRow - GlobalConstants.MinRowValueOnGridAsciiCode;
+            int row = (int)gridRow - GlobalConstants.MinRowValueOnGridAsciiCode;//Getting the row of the grid.
             int col = int.Parse(gridCol) - 1;
             var position = new Position(row, col);
 

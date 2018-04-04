@@ -32,9 +32,9 @@ namespace Battleships.Logic
 
         public void Initialize(Grid hiddenGrid, Grid visibleGrid, IList<IShip> ships)
         {
-            this.FillInitialGrid(visibleGrid, GlobalConstants.NoShotSymbol);
-            this.FillInitialGrid(hiddenGrid, GlobalConstants.BlankSymbol);
-            this.AddShips(hiddenGrid, ships);
+            this.FillInitialGrid(visibleGrid, GlobalConstants.NoShotSymbol); //Filling blank visible grid with '.'
+            this.FillInitialGrid(hiddenGrid, GlobalConstants.BlankSymbol); //Filing blank hidden grid with empty chars.
+            this.AddShips(hiddenGrid, ships); //Adding ships for hidden grid.
         }
 
         private void FillInitialGrid(Grid grid, char symbol)
@@ -55,12 +55,12 @@ namespace Battleships.Logic
                 for (int i = 0; i < shipType.Value; i++)
                 {
                     ShipDirection direction = this.GetRandomShipDirection(); //Gets a ranodm ship direction
-                    IShip ship = this.shipFactory.Get(shipType.Key.Name, direction);
-                    Position topLeft = this.GetRandomShipPosition(ship.Size, direction);
+                    IShip ship = this.shipFactory.Get(shipType.Key.Name, direction); //Creates the ship using factory.
+                    Position randomShipPosition = this.GetRandomShipPosition(ship.Size, direction); //Returns random Ship position.
 
-                    while (this.ShipsOverlap(ship, grid))
+                    while (this.ShipsOverlap(ship, grid)) //Checks if ships overlap.
                     {
-                        ship.TopLeft = this.GetRandomShipPosition(ship.Size, direction);
+                        ship.ShipPosition = this.GetRandomShipPosition(ship.Size, direction);
                     }
 
                     this.AddShip(ship, ships);
@@ -76,8 +76,8 @@ namespace Battleships.Logic
 
         private bool ShipsOverlap(IShip ship, Grid grid)
         {
-            int shipRow = ship.TopLeft.Row;
-            int shipCol = ship.TopLeft.Col;
+            int shipRow = ship.ShipPosition.Row;
+            int shipCol = ship.ShipPosition.Col;
 
             for (int i = 0; i < ship.Size; i++)
             {
@@ -101,7 +101,7 @@ namespace Battleships.Logic
 
         private ShipDirection GetRandomShipDirection()
         {
-            return random.Next(0, 2) == 0 ? ShipDirection.Vertical : ShipDirection.Horizontal;
+            return random.Next(0, 2) == 0 ? ShipDirection.Vertical : ShipDirection.Horizontal; //if 0 returns vertical otherwise return horizontal.
         }
 
         private Position GetRandomShipPosition(int shipSize, ShipDirection direction)

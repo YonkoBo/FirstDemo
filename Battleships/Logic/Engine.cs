@@ -12,8 +12,6 @@ namespace Battleships.Logic
 {
     public class Engine : IEngine
     {
-        private static Random random = new Random();
-
         private IRender renderer;
         private IInterface userInterface;
         private IGameInitializationStrategy gameInitializationStrategy;
@@ -70,7 +68,7 @@ namespace Battleships.Logic
             PlayerData playerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
             return playerData;
         }
-        public void CreateNewPlayerFile(string playerName, int timePlayed, int score) //Creats a new .json file in selected path.
+        public void CreateNewPlayerFile(string playerName, double timePlayed, int score) //Creats a new .json file in selected path.
         {
             Guid id = Guid.NewGuid();
             PlayerData newPlayerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
@@ -79,12 +77,12 @@ namespace Battleships.Logic
         }
         public void Run()
         {
-            Stopwatch timer = new Stopwatch();
+            Stopwatch timer = new Stopwatch(); //Adding timer to track the time.
             timer.Start();
             AskPlayerName(); // Asks user for Name.
-            string playerName = Console.ReadLine(); //Gets user unput.
+            string playerName = Console.ReadLine(); //Gets user name.
 
-            this.gameInitializationStrategy.Initialize(this.hiddenGrid, this.visibleGrid, this.ships);
+            this.gameInitializationStrategy.Initialize(this.hiddenGrid, this.visibleGrid, this.ships); //Initialize hidden and visible grid.
             this.renderer.RenderGrid(this.visibleGrid);
             this.renderer.RenderMessage(GlobalConstants.EnterCoordinatesMsg);
 
@@ -111,8 +109,8 @@ namespace Battleships.Logic
                 if (this.AreAllShipsSunk())
                 {
                     timer.Stop();
-                    int timePlayed = timer.Elapsed.Minutes;
-                    int score = 100 - totalAttempts;
+                    double timePlayed = timer.Elapsed.Seconds;
+                    int score = GlobalConstants.MaxScore - totalAttempts;
                     CreateNewPlayerFile(playerName, timePlayed, score);
                     this.gameStatus = GameStatus.End;
                 }
@@ -129,7 +127,7 @@ namespace Battleships.Logic
             Console.WriteLine("Please Enter Player Name:");
         }
 
-        private void ProcessCommand(UserCommands command)
+        private void ProcessCommand(UserCommands command) //Processes the commands input from the user.
         {
             switch (command)
             {
@@ -146,8 +144,11 @@ namespace Battleships.Logic
                     this.shotPosition = this.userInterface.GetShotPositionFromInput();
                     this.ProcessShootCommand();
                     break;
-                case UserCommands.Bubblesort:
+                case UserCommands.BubbleSort:
                     this.ProcessBubbleSortCommand();
+                    break;
+                case UserCommands.SelectionSort:
+                    this.ProcessSelectionSortCommand();
                     break;
                 case UserCommands.Invalid:
                 default:
@@ -155,14 +156,28 @@ namespace Battleships.Logic
             }
         }
 
+        private void ProcessSelectionSortCommand()
+        {
+            this.gameStatus = GameStatus.Sorting;
+            this.renderer.Clear();
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("Sorting Data by Time Played Using SelectionSort");
+            IEnumerable<PlayerData> sortedData = SortingAlgorithms.SelectionSortByTimePlayed(this.playerData);
+            foreach (var data in sortedData)
+            {
+                Console.WriteLine(string.Format("ID:{0},Time Played:{1} s.,Player Name:{2},Score:{3}", data.ID, data.TimePlayed, data.PlayerName, data.Score));
+            }
+        }
         private void ProcessBubbleSortCommand()
         {
-            Console.Clear();
-            Console.WriteLine("Sorting Data Using BubbbleSort");
+            this.gameStatus = GameStatus.Sorting;
+            this.renderer.Clear();
+            Console.WriteLine(Environment.NewLine);
+            Console.WriteLine("Sorting Data by Score Ascending Using BubbbleSort");
             IEnumerable<PlayerData> sortedData = SortingAlgorithms.BubbleSortByScore(this.playerData);
             foreach (var data in sortedData)
             {
-                Console.WriteLine(string.Format("ID:{0},Time Played:{1},Player Name:{2},Score:{3}", data.ID, data.TimePlayed, data.PlayerName, data.Score));
+                Console.WriteLine(string.Format("ID:{0},Time Played:{1} s.,Player Name:{2},Score:{3}", data.ID, data.TimePlayed, data.PlayerName, data.Score));
             }
         }
         private void ProcessShowCommand()
@@ -211,8 +226,8 @@ namespace Battleships.Logic
 
         private bool IsShipHit(IShip ship, Position position)
         {
-            var row = ship.TopLeft.Row;
-            var col = ship.TopLeft.Col;
+            var row = ship.ShipPosition.Row;
+            var col = ship.ShipPosition.Col;
 
             for (int j = 0; j < ship.Size; j++)
             {
@@ -294,6 +309,14 @@ namespace Battleships.Logic
             if (command == UserCommands.Agree)
             {
                 this.ProcessNewGame();
+            }
+            else if (command == UserCommands.BubbleSort)
+            {
+                this.ProcessBubbleSortCommand();
+            }
+            else if (command == UserCommands.SelectionSort)
+            {
+                this.ProcessSelectionSortCommand();
             }
             else
             {

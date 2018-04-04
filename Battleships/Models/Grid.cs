@@ -9,8 +9,8 @@ namespace Battleships.Models
 
         public Grid(int rows = GlobalConstants.GridRowsCount, int cols = GlobalConstants.GridColsCount)
         {
-            this.TotalRows = rows;
-            this.TotalCols = cols;
+            this.TotalRows = rows; //Setting grid rows with constant row = 10.
+            this.TotalCols = cols; //Setting grid cols with constant col = 10
             this.grid = new char[rows, cols];
         }
 
@@ -20,8 +20,8 @@ namespace Battleships.Models
 
         public void PlaceShip(IShip ship)
         {
-            int shipRow = ship.TopLeft.Row;
-            int shipCol = ship.TopLeft.Col;
+            int shipRow = ship.ShipPosition.Row;
+            int shipCol = ship.ShipPosition.Col;
 
             for (int i = 0; i < ship.Size; i++)
             {

@@ -18,7 +18,7 @@ namespace Battleships
             this.scene = new StringBuilder();
         }
 
-        public void RenderGrid(Grid grid)
+        public void RenderGrid(Grid grid) //Drawing the board.
         {
             Console.SetCursorPosition(GridColPosition, GridRowPosition);
 
@@ -27,7 +27,7 @@ namespace Battleships
 
             for (int i = 1; i <= GlobalConstants.GridColsCount; i++)
             {
-                string toAppend = i < 9 ? i.ToString() : i.ToString().Substring(i.ToString().Length - 1);
+                string toAppend = i < 9 ? i.ToString(): i.ToString().Substring(i.ToString().Length - 1);
                 this.scene.Append(toAppend);
             }
 
@@ -96,7 +96,7 @@ namespace Battleships
             this.ClearRow(GridRowPosition + GlobalConstants.GridRowsCount + 4);
         }
 
-        private void ClearRow(int row)
+        private void ClearRow(int row) // Clears row at position givven.
         {
             Console.BackgroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, row);

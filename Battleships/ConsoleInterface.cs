@@ -31,7 +31,9 @@ namespace Battleships
                 case GlobalConstants.AgreeCommand:
                     return UserCommands.Agree;
                 case GlobalConstants.BubbleSortCommand:
-                    return UserCommands.Bubblesort;
+                    return UserCommands.BubbleSort;
+                case GlobalConstants.SelectionSortCommand:
+                    return UserCommands.SelectionSort;
                 default:
                     if (this.AreValidCoordinates(input))
                     {

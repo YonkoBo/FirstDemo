@@ -8,6 +8,7 @@
         Shoot,
         Agree,
         Invalid,
-        Bubblesort
+        BubbleSort,
+        SelectionSort
     }
 }

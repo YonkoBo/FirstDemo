@@ -40,5 +40,26 @@ namespace Battleships.Models
             }
             return arr;
         }
+        public static int IntArrayMin(PlayerData[] data, int start)
+        {
+            int minPos = start;
+            for (int pos = start + 1; pos < data.Length; pos++)
+                if (data[pos].TimePlayed < data[minPos].TimePlayed)
+                    minPos = pos;
+            return minPos;
+        }
+
+        public static IEnumerable<PlayerData> SelectionSortByTimePlayed(IEnumerable<PlayerData> list)
+        {
+            PlayerData[] data = list.ToArray();
+
+            for (int i = 0; i < data.Length - 1; i++)
+            {
+                int k = IntArrayMin(data, i);
+                if (i != k)
+                    Swap(data, i, k);
+            }
+            return data;
+        }
     }
 }

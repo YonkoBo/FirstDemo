@@ -6,7 +6,7 @@ namespace Battleships.Models
     public class Battleship : Ship, IShip
     {
         public Battleship(ShipDirection direction)
-            : base(GlobalConstants.BattleshipSize, direction, GlobalConstants.DestroyerSymbol)
+            : base(GlobalConstants.BattleshipSize, direction, GlobalConstants.BattleshipSymbol)
         {
         }
 

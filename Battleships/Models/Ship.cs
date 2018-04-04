@@ -15,10 +15,10 @@ namespace Battleships.Models
             this.Image = shipSymbol;
         }
 
-        public Ship(int size, ShipDirection direction, char shipSymbol, Position topLeft)
+        public Ship(int size, ShipDirection direction, char shipSymbol, Position shipPosition)
             : this(size, direction, shipSymbol)
         {
-            this.TopLeft = topLeft;
+            this.ShipPosition = shipPosition;
         }
 
         public int Size
@@ -39,7 +39,7 @@ namespace Battleships.Models
 
         public char Image { get; set; }
 
-        public Position TopLeft { get; set; }
+        public Position ShipPosition { get; set; }
 
         public bool IsSunk { get; set; }
 
