@@ -34,8 +34,6 @@ namespace Battleships.Logic
             this.visibleGrid = new Grid();
             this.totalAttempts = 0; //
             this.gameStatus = GameStatus.Play; //Sets current gamestatus to Play.
-            this.playerFactory = new PlayerFactory();
-            this.playerData = LoadData();
         }
 
         public IList<IShip> Ships
@@ -46,28 +44,6 @@ namespace Battleships.Logic
             }
         }
 
-        public List<PlayerData> LoadData() //Loading all existing files from given path
-        {
-            List<PlayerData> playerData = new List<PlayerData>();
-            IEnumerable<string> files = Directory.EnumerateFiles(GlobalConstants.Path, "*.json");
-            foreach (var file in files)
-            {
-                PlayerData dataToAdd = ParsePlayerData(file);
-                playerData.Add(dataToAdd);
-            }
-            return playerData;
-        }
-        private PlayerData ParsePlayerData(string data) //Creating new object of type PlayerData.
-        {
-            string[] dataSplited = data.Split('_');
-            Guid id = new Guid(dataSplited[1]);
-            string playerName = dataSplited[2];
-            double timePlayed = double.Parse(dataSplited[3]);
-            int score = Int32.Parse(dataSplited[4]);
-
-            PlayerData playerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
-            return playerData;
-        }
         public void CreateNewPlayerFile(string playerName, double timePlayed, int score) //Creats a new .json file in selected path.
         {
             Guid id = Guid.NewGuid();
