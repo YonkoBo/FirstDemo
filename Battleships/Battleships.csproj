@@ -48,11 +48,14 @@
     <Compile Include="Common\Validator.cs" />
     <Compile Include="ConsoleInterface.cs" />
     <Compile Include="ConsoleRender.cs" />
+    <Compile Include="Logic\Contracts\IDataLoader.cs" />
     <Compile Include="Logic\Contracts\IEngine.cs" />
     <Compile Include="Logic\Contracts\IGameInitializationStrategy.cs" />
     <Compile Include="Logic\Contracts\IInterface.cs" />
     <Compile Include="Logic\Contracts\IRender.cs" />
+    <Compile Include="Logic\DataLoader.cs" />
     <Compile Include="Logic\Engine.cs" />
+    <Compile Include="Logic\Factory\GrdiFactory.cs" />
     <Compile Include="Logic\Factory\PlayerFactory.cs" />
     <Compile Include="Logic\GameInitializationStrategy.cs" />
     <Compile Include="Logic\GameStatus.cs" />
