@@ -5,7 +5,6 @@ namespace Battleships.Logic.Contracts
 {
     public interface IDataLoader
     {
-        List<PlayerData> LoadData();
-        PlayerData ParsePlayerData(string data);
+        List<PlayerData> LoadData(IPlayerFactory playerFactory);
     }
 }

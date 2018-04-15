@@ -12,28 +12,41 @@ namespace Battleships.Logic
 {
     public class Engine : IEngine
     {
+        #region PrivateFields
         private IRender renderer;
         private IInterface userInterface;
         private IGameInitializationStrategy gameInitializationStrategy;
         private IList<IShip> ships;
-        private Grid visibleGrid;
-        private Grid hiddenGrid;
         private GameStatus gameStatus;
         private Position shotPosition;
         private int totalAttempts;
         private List<PlayerData> playerData;
-        private PlayerFactory playerFactory;
+        private IGridViewFactory gridFactory;
+        private Grid visibleGrid;
+        private Grid hiddenGrid;
+        private IHelpers helper;
+        private IPlayerFactory playerFactory;
+        private IDataCreator dataCreator;
+        private IDataLoader dataLoader;
+        #endregion
 
-        public Engine(IRender renderer, IInterface userInterface, IGameInitializationStrategy gameInitializationStrategy)
+        public Engine(IRender renderer, IInterface userInterface, IGameInitializationStrategy gameInitializationStrategy, IGridViewFactory gridFactory, IHelpers helper,
+                      IPlayerFactory playerFactory, IDataCreator dataCreator, IDataLoader dataLoader)
         {
             this.renderer = renderer; //Grid builder
             this.userInterface = userInterface; // user interface.
             this.gameInitializationStrategy = gameInitializationStrategy; //Types of ships
             this.ships = new List<IShip>();
-            this.hiddenGrid = new Grid();
-            this.visibleGrid = new Grid();
+            this.gridFactory = gridFactory;
+            this.visibleGrid = gridFactory.CreateNewGrid();
+            this.hiddenGrid = gridFactory.CreateNewGrid();
             this.totalAttempts = 0; //
             this.gameStatus = GameStatus.Play; //Sets current gamestatus to Play.
+            this.helper = helper;
+            this.playerFactory = playerFactory;
+            this.dataCreator = dataCreator;
+            this.dataLoader = dataLoader;
+            this.playerData = dataLoader.LoadData(playerFactory);
         }
 
         public IList<IShip> Ships
@@ -44,18 +57,12 @@ namespace Battleships.Logic
             }
         }
 
-        public void CreateNewPlayerFile(string playerName, double timePlayed, int score) //Creats a new .json file in selected path.
-        {
-            Guid id = Guid.NewGuid();
-            PlayerData newPlayerData = playerFactory.CreatePlayerData(playerName, score, timePlayed, id);
-            string fileName = string.Format("_{0}_{1}_{2}_{3}_.json", newPlayerData.ID, newPlayerData.PlayerName, newPlayerData.TimePlayed, newPlayerData.Score);
-            File.Create(fileName);
-        }
+
         public void Run()
         {
             Stopwatch timer = new Stopwatch(); //Adding timer to track the time.
             timer.Start();
-            AskPlayerName(); // Asks user for Name.
+            helper.AskPlayerName(); // Asks user for Name.
             string playerName = Console.ReadLine(); //Gets user name.
 
             this.gameInitializationStrategy.Initialize(this.hiddenGrid, this.visibleGrid, this.ships); //Initialize hidden and visible grid.
@@ -87,7 +94,8 @@ namespace Battleships.Logic
                     timer.Stop();
                     double timePlayed = timer.Elapsed.Seconds;
                     int score = GlobalConstants.MaxScore - totalAttempts;
-                    CreateNewPlayerFile(playerName, timePlayed, score);
+
+                    dataCreator.CreateNewPlayerFile(playerName, timePlayed, score, playerFactory);
                     this.gameStatus = GameStatus.End;
                 }
 
@@ -98,10 +106,7 @@ namespace Battleships.Logic
                 }
             }
         }
-        private void AskPlayerName()
-        {
-            Console.WriteLine("Please Enter Player Name:");
-        }
+
 
         private void ProcessCommand(UserCommands command) //Processes the commands input from the user.
         {

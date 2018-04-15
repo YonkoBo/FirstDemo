@@ -1,9 +1,10 @@
-﻿using Battleships.Models;
+﻿using Battleships.Logic.Contracts;
+using Battleships.Models;
 using System;
 
 namespace Battleships.Logic.Factory
 {
-    public class PlayerFactory
+    public class PlayerFactory : IPlayerFactory
     {
         public PlayerData CreatePlayerData(string playerName, int score, double timePlayed, Guid id)
         {

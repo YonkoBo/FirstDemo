@@ -11,24 +11,22 @@ namespace Battleships.Logic
     public class DataLoader : IDataLoader
     {
         private List<PlayerData> playerData;
-        private PlayerFactory playerFactory;
         public DataLoader()
         {
-            this.playerFactory = new PlayerFactory();
             this.playerData = new List<PlayerData>();
 
         }
-        public List<PlayerData> LoadData() //Loading all existing files from given path
+        public List<PlayerData> LoadData(IPlayerFactory playerFactory) //Loading all existing files from given path
         {
             IEnumerable<string> files = Directory.EnumerateFiles(GlobalConstants.Path, "*.json");
             foreach (var file in files)
             {
-                PlayerData dataToAdd = ParsePlayerData(file);
+                PlayerData dataToAdd = ParsePlayerData(file, playerFactory);
                 playerData.Add(dataToAdd);
             }
             return playerData;
         }
-        public PlayerData ParsePlayerData(string data) //Creating new object of type PlayerData.
+        private PlayerData ParsePlayerData(string data, IPlayerFactory playerFactory) //Creating new object of type PlayerData.
         {
             string[] dataSplited = data.Split('_');
             Guid id = new Guid(dataSplited[1]);
