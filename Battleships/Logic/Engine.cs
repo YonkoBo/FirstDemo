@@ -41,7 +41,7 @@ namespace Battleships.Logic
             this.visibleGrid = gridFactory.CreateNewGrid();
             this.hiddenGrid = gridFactory.CreateNewGrid();
             this.totalAttempts = 0; //
-            this.gameStatus = GameStatus.Play; //Sets current gamestatus to Play.
+
             this.helper = helper;
             this.playerFactory = playerFactory;
             this.dataCreator = dataCreator;

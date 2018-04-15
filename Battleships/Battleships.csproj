@@ -48,6 +48,13 @@
     <Compile Include="Common\Validator.cs" />
     <Compile Include="ConsoleInterface.cs" />
     <Compile Include="ConsoleRender.cs" />
+    <Compile Include="Logic\Commands\BubbleSortCommand.cs" />
+    <Compile Include="Logic\Commands\Contracts\IProcessCommandStrategy.cs" />
+    <Compile Include="Logic\Commands\ExitCommand.cs" />
+    <Compile Include="Logic\Commands\NewGameCommand.cs" />
+    <Compile Include="Logic\Commands\SelectionSortCommand.cs" />
+    <Compile Include="Logic\Commands\ShootCommand.cs" />
+    <Compile Include="Logic\Commands\ShowCommand.cs" />
     <Compile Include="Logic\Contracts\IDataLoader.cs" />
     <Compile Include="Logic\Contracts\IEngine.cs" />
     <Compile Include="Logic\Contracts\IGameInitializationStrategy.cs" />
