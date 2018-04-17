@@ -79,8 +79,11 @@
     <Compile Include="ConsoleInterface.cs" />
     <Compile Include="ConsoleRender.cs" />
     <Compile Include="Logic\Commands\BubbleSortCommand.cs" />
+    <Compile Include="Logic\Commands\Context.cs" />
+    <Compile Include="Logic\Commands\Contracts\IContext.cs" />
     <Compile Include="Logic\Commands\Contracts\IProcessCommandStrategy.cs" />
     <Compile Include="Logic\Commands\ExitCommand.cs" />
+    <Compile Include="Logic\Commands\InvalidCommand.cs" />
     <Compile Include="Logic\Commands\NewGameCommand.cs" />
     <Compile Include="Logic\Commands\SelectionSortCommand.cs" />
     <Compile Include="Logic\Commands\ShootCommand.cs" />

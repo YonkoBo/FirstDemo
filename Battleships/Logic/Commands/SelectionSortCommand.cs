@@ -11,10 +11,11 @@ namespace Battleships.Logic.Commands
         private GameStatus gameStatus;
         private IRender renderer;
         public List<PlayerData> PlayerData { get; set; }
-        public SelectionSortCommand(IRender renderer, List<PlayerData> playerData)
+        public SelectionSortCommand(IRender renderer, List<PlayerData> playerData, GameStatus gameStatus)
         {
             this.renderer = renderer;
             PlayerData = playerData;
+            this.gameStatus = gameStatus;
         }
         public void ProcessCommand()
         {

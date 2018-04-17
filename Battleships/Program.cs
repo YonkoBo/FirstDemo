@@ -2,6 +2,8 @@
 using Battleships.Logic;
 using Battleships.Logic.Factory;
 using Unity;
+using Battleships.Logic.Commands.Contracts;
+using Battleships.Logic.Commands;
 
 namespace Battleships
 {
@@ -10,6 +12,8 @@ namespace Battleships
         static void Main(string[] args)
         {
             IUnityContainer dependencyInection = UnityDependencyInjection();
+
+            IContext context = new Context(dependencyInection);
 
             IEngine engine = dependencyInection.Resolve<Engine>();
             engine.Run();
@@ -34,6 +38,18 @@ namespace Battleships
             dependencyInjection.RegisterType<IRender, ConsoleRender>();
             dependencyInjection.RegisterType<IGameInitializationStrategy, GameInitializationStrategy>();
             dependencyInjection.RegisterType<IHelpers, Helpers>();
+
+            //Commands
+            dependencyInjection.RegisterType<IProcessCommandStrategy, ShowCommand>("Show");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, ShootCommand>("Shoot");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, BubbleSortCommand>("Bubblesort");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, SelectionSortCommand>("Selectionsort");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, ExitCommand>("Exit");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, NewGameCommand>("New");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, InvalidCommand>("Invalid");
+
+            IProcessCommandStrategy showCommand = dependencyInjection.Resolve<IProcessCommandStrategy>("Show");
+
 
             return dependencyInjection;
         }

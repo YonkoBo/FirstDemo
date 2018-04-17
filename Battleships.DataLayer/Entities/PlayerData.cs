@@ -8,5 +8,6 @@ namespace Battleships.Models
         public int Score { get; set; }
         public double TimePlayed { get; set; }
         public Guid ID { get; set; }
+        public int TotalAtempts { get; set; }
     }
 }

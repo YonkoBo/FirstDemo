@@ -20,6 +20,7 @@
         public const char MissSymbol = '-';
         public const char HitSymbol = 'X';
 
+
         public const string AgreeCommand = "Y";
         public const string ShowCommand = "SHOW";
         public const string ExitCommand = "EXIT";
