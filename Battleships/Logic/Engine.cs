@@ -110,6 +110,9 @@ namespace Battleships.Logic
 
         private void ProcessCommand(UserCommands command) //Processes the commands input from the user.
         {
+
+            //dictionary[command].DoAlgorithm();
+
             switch (command)
             {
                 case UserCommands.Show:
@@ -169,6 +172,38 @@ namespace Battleships.Logic
             this.ProcessCommand(this.userInterface.GetCommandFromInput());
             this.renderer.RenderGrid(this.visibleGrid);
         }
+
+
+        public interface ICommandInterface
+        {
+            void ExecuteKurec();
+        }
+
+        public class BubbleCommand : ICommandInterface
+        {
+            public void ExecuteKurec()
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public enum KurEnum
+        {
+            bubble,
+            shnur,
+            drugbuble,
+        }
+
+        public class MainKUrec
+        {
+            public Dictionary<KurEnum, ICommandInterface> test = new Dictionary<KurEnum, ICommandInterface>();
+
+            public void MainShnur()
+            {
+                test.Add(KurEnum.bubble, new BubbleCommand());
+            }
+        }
+
 
         private void ProcessShootCommand()
         {

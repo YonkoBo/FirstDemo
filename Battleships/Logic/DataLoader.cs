@@ -10,14 +10,12 @@ namespace Battleships.Logic
 {
     public class DataLoader : IDataLoader
     {
-        private List<PlayerData> playerData;
         public DataLoader()
         {
-            this.playerData = new List<PlayerData>();
-
         }
         public List<PlayerData> LoadData(IPlayerFactory playerFactory) //Loading all existing files from given path
         {
+            List<PlayerData> playerData = new List<PlayerData>();
             IEnumerable<string> files = Directory.EnumerateFiles(GlobalConstants.Path, "*.json");
             foreach (var file in files)
             {
