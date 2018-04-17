@@ -2,6 +2,8 @@
 using Battleships.Logic.Commands.Contracts;
 using Battleships.Logic.Contracts;
 using Battleships.Common;
+using Battleships.Models;
+using System.Collections.Generic;
 
 namespace Battleships.Logic.Commands
 {
@@ -14,7 +16,7 @@ namespace Battleships.Logic.Commands
             this.renderer = renderer;
             this.userInterface = userInterface;
         }
-        public void ProcessCommand()
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
         {
             this.renderer.RenderMessage(string.Format(GlobalConstants.ExitMsg, GlobalConstants.AgreeCommand));
             UserCommands command = this.userInterface.GetCommandFromInput();

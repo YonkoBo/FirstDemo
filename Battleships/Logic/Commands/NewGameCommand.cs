@@ -1,5 +1,7 @@
 ﻿using Battleships.Logic.Commands.Contracts;
 using Battleships.Logic.Contracts;
+using Battleships.Models;
+using System.Collections.Generic;
 
 namespace Battleships.Logic.Commands
 {
@@ -9,20 +11,16 @@ namespace Battleships.Logic.Commands
         private GameStatus gameStatus;
         private IEngine engine;
         private IPlayerFactory playerFactory;
-        public int TotalAtempts { get; set; }
-        public NewGameCommand(IRender renderer, IEngine engine, IPlayerFactory playerFactory, int totalAtempts, GameStatus gameStatus)
+        public NewGameCommand(IRender renderer, IPlayerFactory playerFactory)
         {
             this.renderer = renderer;
-            this.engine = engine;
             this.playerFactory = playerFactory;
-            this.gameStatus = gameStatus;
-            TotalAtempts = totalAtempts;
         }
-        public void ProcessCommand()
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
         {
             this.gameStatus = GameStatus.Play;
             this.renderer.Clear();
-            TotalAtempts = 0;
+            totalAttempts = 0;
             engine.Run();
         }
     }

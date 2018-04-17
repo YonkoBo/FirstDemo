@@ -13,7 +13,6 @@ namespace Battleships
         {
             IUnityContainer dependencyInection = UnityDependencyInjection();
 
-            IContext context = new Context(dependencyInection);
 
             IEngine engine = dependencyInection.Resolve<Engine>();
             engine.Run();
@@ -24,6 +23,7 @@ namespace Battleships
 
             //App
             dependencyInjection.RegisterType<IEngine, Engine>();
+            dependencyInjection.RegisterType<IContext, Context>();
 
             //Factories
             dependencyInjection.RegisterType<IPlayerFactory, PlayerFactory>();
@@ -42,14 +42,11 @@ namespace Battleships
             //Commands
             dependencyInjection.RegisterType<IProcessCommandStrategy, ShowCommand>("Show");
             dependencyInjection.RegisterType<IProcessCommandStrategy, ShootCommand>("Shoot");
-            dependencyInjection.RegisterType<IProcessCommandStrategy, BubbleSortCommand>("Bubblesort");
-            dependencyInjection.RegisterType<IProcessCommandStrategy, SelectionSortCommand>("Selectionsort");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, BubbleSortCommand>("BubbleSort");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, SelectionSortCommand>("SelectionSort");
             dependencyInjection.RegisterType<IProcessCommandStrategy, ExitCommand>("Exit");
             dependencyInjection.RegisterType<IProcessCommandStrategy, NewGameCommand>("New");
             dependencyInjection.RegisterType<IProcessCommandStrategy, InvalidCommand>("Invalid");
-
-            IProcessCommandStrategy showCommand = dependencyInjection.Resolve<IProcessCommandStrategy>("Show");
-
 
             return dependencyInjection;
         }

@@ -2,6 +2,7 @@
 using Battleships.Logic.Commands.Contracts;
 using Battleships.Logic.Contracts;
 using Battleships.Models;
+using System.Collections.Generic;
 
 namespace Battleships.Logic.Commands
 {
@@ -10,22 +11,19 @@ namespace Battleships.Logic.Commands
         private GameStatus gameStatus;
         private IRender renderer;
         private IInterface userInterface;
-        public Grid HiddenGrid { get; set; }
-        public Grid VisibleGrid { get; set; }
-        public ShowCommand(Grid hiddenGrid, Grid visibleGrid, IRender renderer, IInterface userInterface)
+        public ShowCommand(IRender renderer, IInterface userInterface)
         {
             this.renderer = renderer; ;
             this.userInterface = userInterface;
-            HiddenGrid = hiddenGrid;
-            VisibleGrid = visibleGrid;
         }
-        public void ProcessCommand()
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
         {
             this.gameStatus = GameStatus.Show;
             this.renderer.RenderStatusMessage(this.gameStatus.ToString());
-            this.renderer.RenderGrid(HiddenGrid);
+            this.renderer.RenderGrid(hiddenGrid);
             this.userInterface.GetCommandFromInput();
-            this.renderer.RenderGrid(VisibleGrid);
+            this.renderer.RenderGrid(visibleGrid);
+            this.renderer.UpdateGrid(visibleGrid, shotPosition);
         }
     }
 }

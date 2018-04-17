@@ -16,50 +16,36 @@ namespace Battleships.Logic.Commands
                 return new List<IShip>(ShipsAdded);
             }
         }
-        public Grid HiddenGrid { get; set; }
-        public Grid VisibleGrid { get; set; }
-        public Position ShotPosition { get; set; }
         public int TotalAttempts { get; set; }
         public IList<IShip> ShipsAdded { get; set; }
-        GameStatus gameStatus;
-        public ShootCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, GameStatus gameStatus, IList<IShip> shipsAdded)
+        public ShootCommand()
         {
-            HiddenGrid = hiddenGrid;
-            VisibleGrid = visibleGrid;
-            ShotPosition = shotPosition;
-            TotalAttempts = totalAttempts;
-            this.gameStatus = gameStatus;
-            ShipsAdded = shipsAdded;
         }
-        public void ProcessCommand()
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
         {
-            if (HiddenGrid.GetCell(ShotPosition) != GlobalConstants.BlankSymbol)
+            if (hiddenGrid.GetCell(shotPosition) != GlobalConstants.BlankSymbol)
             {
-                this.ProcessShipHit();
-                VisibleGrid.SetCell(ShotPosition, GlobalConstants.HitSymbol);
+                this.ProcessShipHit(visibleGrid, shotPosition);
+                visibleGrid.SetCell(shotPosition, GlobalConstants.HitSymbol);
             }
             else
             {
-                VisibleGrid.SetCell(ShotPosition, GlobalConstants.MissSymbol);
-                gameStatus = GameStatus.Miss;
+                visibleGrid.SetCell(shotPosition, GlobalConstants.MissSymbol);
             }
-
-            TotalAttempts++;
+            totalAttempts++;
         }
-        private void ProcessShipHit()
+        private void ProcessShipHit(Grid visibleGrid, Position shotPosition)
         {
             for (int i = 0; i < this.Ships.Count; i++)
             {
                 var currentShip = this.Ships[i];
-                if (IsShipHit(currentShip, ShotPosition) && VisibleGrid.GetCell(ShotPosition) != GlobalConstants.HitSymbol)
+                if (IsShipHit(currentShip, shotPosition) && visibleGrid.GetCell(shotPosition) != GlobalConstants.HitSymbol)
                 {
                     HitShip(currentShip);
-                    gameStatus = GameStatus.Hit;
 
                     if (IsShipSinking(currentShip))
                     {
                         SinkShip(currentShip);
-                        gameStatus = GameStatus.Sunk;
                     }
                 }
             }

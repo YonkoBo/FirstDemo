@@ -8,22 +8,17 @@ namespace Battleships.Logic.Commands
 {
     public class SelectionSortCommand : IProcessCommandStrategy
     {
-        private GameStatus gameStatus;
         private IRender renderer;
-        public List<PlayerData> PlayerData { get; set; }
-        public SelectionSortCommand(IRender renderer, List<PlayerData> playerData, GameStatus gameStatus)
+        public SelectionSortCommand(IRender renderer)
         {
             this.renderer = renderer;
-            PlayerData = playerData;
-            this.gameStatus = gameStatus;
         }
-        public void ProcessCommand()
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
         {
-            this.gameStatus = GameStatus.Sorting;
             this.renderer.Clear();
             Console.WriteLine(Environment.NewLine);
             Console.WriteLine("Sorting Data by Time Played Using SelectionSort");
-            IEnumerable<PlayerData> sortedData = SortingAlgorithms.SelectionSortByTimePlayed(PlayerData);
+            IEnumerable<PlayerData> sortedData = SortingAlgorithms.SelectionSortByTimePlayed(playerData);
             foreach (var data in sortedData)
             {
                 Console.WriteLine(string.Format("ID:{0},Time Played:{1} s.,Player Name:{2},Score:{3}", data.ID, data.TimePlayed, data.PlayerName, data.Score));
