@@ -37,7 +37,7 @@
         public const string InvalidRowMsg = "Row cannot be negative or exceed grid maximum rows.";
         public const string InvalidColMsg = "Column cannot be negative or exceed grid maximum columns.";
         public const string ShipNegativeSizeMsg = "Size cannot be negative.";
-        public const string InvalidCommandMsg = "Please enter \"show\", \"exit\", \"new\", \"bubblesort\", \"selectionsort\" or coordinates in the format \"A5\".";
+        public const string InvalidCommandMsg = "Please enter \"show\", \"exit\", \"new\", \"bubblesort\", \"selectionsort\", \"autoplay\" or coordinates in the format \"A5\".";
         public const string InvalidShipHit = "The ship is already sunk.";
         public const string InvalidShipMsg = "You cannot create a non-existing ship.";
     }

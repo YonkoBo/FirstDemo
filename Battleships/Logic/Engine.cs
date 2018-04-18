@@ -79,8 +79,17 @@ namespace Battleships.Logic
 
                 try
                 {
-                    context.ExecuteCommands(command, this.hiddenGrid, this.visibleGrid, this.shotPosition = this.userInterface.GetShotPositionFromInput(),
-                                            this.totalAttempts, this.playerData, this.Ships);
+                    if (command == UserCommands.Shoot)
+                    {
+                        context.ExecuteCommands(command, this.hiddenGrid, this.visibleGrid, this.shotPosition = this.userInterface.GetShotPositionFromInput(),
+                                           this.totalAttempts, this.playerData, this.Ships);
+                    }
+                    else
+                    {
+                        context.ExecuteCommands(command, this.hiddenGrid, this.visibleGrid, this.shotPosition,
+                                          this.totalAttempts, this.playerData, this.Ships);
+                    }
+
                 }
                 catch (Exception e)
                 {
@@ -90,21 +99,15 @@ namespace Battleships.Logic
                 }
                 this.renderer.UpdateGrid(this.visibleGrid, this.shotPosition);
 
-                //if (this.AreAllShipsSunk())
-                //{
-                //    timer.Stop();
-                //    double timePlayed = timer.Elapsed.Seconds;
-                //    int score = GlobalConstants.MaxScore - totalAttempts;
-
-                //    dataCreator.CreateNewPlayerFile(playerName, timePlayed, score, playerFactory);
-                //    this.gameStatus = GameStatus.End;
-                //}
-
-                //if (this.gameStatus == GameStatus.End)
-                //{
-                //    this.renderer.RenderStatusMessage(this.gameStatus.ToString());
-                //    this.ProcessGameEnd();
-                //}
+                if (helper.AreAllShipsSunk(Ships))
+                {
+                    timer.Stop();
+                    double timePlayed = timer.Elapsed.Seconds;
+                    int score = GlobalConstants.MaxScore - totalAttempts;
+                    this.dataCreator.CreateNewPlayerFile(playerName, timePlayed, score, playerFactory);
+                    dataCreator.CreateNewPlayerFile(playerName, timePlayed, score, playerFactory);
+                    this.gameStatus = GameStatus.End;
+                }
             }
         }
     }
