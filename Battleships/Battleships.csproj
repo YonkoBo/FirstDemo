@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="ConsoleInterface.cs" />
     <Compile Include="ConsoleRender.cs" />
+    <Compile Include="Logic\Commands\AutoPlayCommand.cs" />
     <Compile Include="Logic\Commands\BubbleSortCommand.cs" />
     <Compile Include="Logic\Commands\Context.cs" />
     <Compile Include="Logic\Commands\Contracts\IContext.cs" />
@@ -110,6 +111,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Battleships.AutoPlay\Battleships.AutoPlay.csproj">
+      <Project>{e99edb53-da28-4428-a222-c3621876e89d}</Project>
+      <Name>Battleships.AutoPlay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Battleships.DataLayer\Battleships.DataLayer.csproj">
       <Project>{5c52ee6d-1815-434c-89c5-bc3647cd489c}</Project>
       <Name>Battleships.DataLayer</Name>

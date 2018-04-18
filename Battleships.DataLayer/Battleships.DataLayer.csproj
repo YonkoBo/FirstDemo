@@ -38,6 +38,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +48,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\EnumExtensions.cs" />
+    <Compile Include="Common\Enums.cs" />
     <Compile Include="Common\GlobalConstants.cs" />
     <Compile Include="Common\Validator.cs" />
+    <Compile Include="Entities\AutoPlay\BotCoordinates.cs" />
+    <Compile Include="Entities\AutoPlay\BotFiringBoard.cs" />
+    <Compile Include="Entities\AutoPlay\BotGame.cs" />
+    <Compile Include="Entities\AutoPlay\BotGameBoard.cs" />
+    <Compile Include="Entities\AutoPlay\BotPanels.cs" />
+    <Compile Include="Entities\AutoPlay\BotPlayer.cs" />
+    <Compile Include="Entities\AutoPlay\BotsShip.cs" />
+    <Compile Include="Entities\AutoPlay\Contracts\IBotGame.cs" />
+    <Compile Include="Entities\AutoPlay\Contracts\IBotGameBoard.cs" />
+    <Compile Include="Entities\AutoPlay\Extensions\BotPanelExtensions.cs" />
+    <Compile Include="Entities\AutoPlay\Ships\BotBattleship.cs" />
+    <Compile Include="Entities\AutoPlay\Ships\BotCarrier.cs" />
+    <Compile Include="Entities\AutoPlay\Ships\BotCruiser.cs" />
+    <Compile Include="Entities\AutoPlay\Ships\BotDestroyer.cs" />
+    <Compile Include="Entities\AutoPlay\Ships\BotSubmarine.cs" />
     <Compile Include="Entities\Battleship.cs" />
     <Compile Include="Entities\Contracts\IShip.cs" />
     <Compile Include="Entities\Destroyer.cs" />
@@ -67,9 +86,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

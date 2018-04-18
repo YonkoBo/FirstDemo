@@ -1,6 +1,7 @@
 ﻿using Battleships.Logic.Commands.Contracts;
 using Battleships.Logic.Contracts;
 using Battleships.Models;
+using Battleships.Models.Contracts;
 using System.Collections.Generic;
 
 namespace Battleships.Logic.Commands
@@ -16,7 +17,7 @@ namespace Battleships.Logic.Commands
             this.renderer = renderer;
             this.playerFactory = playerFactory;
         }
-        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData, IList<IShip> ship)
         {
             this.gameStatus = GameStatus.Play;
             this.renderer.Clear();

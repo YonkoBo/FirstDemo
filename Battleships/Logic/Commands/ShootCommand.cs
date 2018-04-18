@@ -9,23 +9,16 @@ namespace Battleships.Logic.Commands
 {
     public class ShootCommand : IProcessCommandStrategy
     {
-        public IList<IShip> Ships
-        {
-            get
-            {
-                return new List<IShip>(ShipsAdded);
-            }
-        }
         public int TotalAttempts { get; set; }
         public IList<IShip> ShipsAdded { get; set; }
         public ShootCommand()
         {
         }
-        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData)
+        public void ProcessCommand(Grid hiddenGrid, Grid visibleGrid, Position shotPosition, int totalAttempts, List<PlayerData> playerData, IList<IShip> ship)
         {
             if (hiddenGrid.GetCell(shotPosition) != GlobalConstants.BlankSymbol)
             {
-                this.ProcessShipHit(visibleGrid, shotPosition);
+                this.ProcessShipHit(visibleGrid, shotPosition, ship);
                 visibleGrid.SetCell(shotPosition, GlobalConstants.HitSymbol);
             }
             else
@@ -34,11 +27,11 @@ namespace Battleships.Logic.Commands
             }
             totalAttempts++;
         }
-        private void ProcessShipHit(Grid visibleGrid, Position shotPosition)
+        private void ProcessShipHit(Grid visibleGrid, Position shotPosition, IList<IShip> ship)
         {
-            for (int i = 0; i < this.Ships.Count; i++)
+            for (int i = 0; i < ship.Count; i++)
             {
-                var currentShip = this.Ships[i];
+                var currentShip = ship[i];
                 if (IsShipHit(currentShip, shotPosition) && visibleGrid.GetCell(shotPosition) != GlobalConstants.HitSymbol)
                 {
                     HitShip(currentShip);

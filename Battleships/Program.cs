@@ -4,6 +4,9 @@ using Battleships.Logic.Factory;
 using Unity;
 using Battleships.Logic.Commands.Contracts;
 using Battleships.Logic.Commands;
+using Battleships.DataLayer.Entities.AutoPlay.Contracts;
+using Battleships.DataLayer.Entities.AutoPlay;
+using Battleships.AutoPlay;
 
 namespace Battleships
 {
@@ -13,9 +16,10 @@ namespace Battleships
         {
             IUnityContainer dependencyInection = UnityDependencyInjection();
 
-
-            IEngine engine = dependencyInection.Resolve<Engine>();
-            engine.Run();
+            IBotGamePlay botPlay = dependencyInection.Resolve<BotGamePlay>();
+            botPlay.Run();
+            //IEngine engine = dependencyInection.Resolve<Engine>();
+            //engine.Run();
         }
         private static IUnityContainer UnityDependencyInjection()
         {
@@ -47,6 +51,11 @@ namespace Battleships
             dependencyInjection.RegisterType<IProcessCommandStrategy, ExitCommand>("Exit");
             dependencyInjection.RegisterType<IProcessCommandStrategy, NewGameCommand>("New");
             dependencyInjection.RegisterType<IProcessCommandStrategy, InvalidCommand>("Invalid");
+            dependencyInjection.RegisterType<IProcessCommandStrategy, AutoPlayCommand>("AutoPlay");
+
+            //AutoPlay
+            //dependencyInjection.RegisterType<IBotGame, BotGame>();
+            dependencyInjection.RegisterType<IBotGamePlay, BotGamePlay>();
 
             return dependencyInjection;
         }
