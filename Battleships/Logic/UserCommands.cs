@@ -9,6 +9,7 @@
         Agree,
         Invalid,
         BubbleSort,
-        SelectionSort
+        SelectionSort,
+        AutoPlay
     }
 }

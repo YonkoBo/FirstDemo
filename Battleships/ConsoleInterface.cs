@@ -34,6 +34,8 @@ namespace Battleships
                     return UserCommands.BubbleSort;
                 case GlobalConstants.SelectionSortCommand:
                     return UserCommands.SelectionSort;
+                case GlobalConstants.AutoPlayCommand:
+                    return UserCommands.AutoPlay;
                 default:
                     if (this.AreValidCoordinates(input)) //Validation for correct cordinates.
                     {

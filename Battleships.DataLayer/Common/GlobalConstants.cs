@@ -27,6 +27,7 @@
         public const string NewGameCommand = "NEW";
         public const string BubbleSortCommand = "BUBBLESORT";
         public const string SelectionSortCommand = "SELECTIONSORT";
+        public const string AutoPlayCommand = "AUTOPLAY";
 
         public const string EnterCoordinatesMsg = "Enter coordinates (row, col), e.g. A5: ";
         public const string ExitMsg = "Are you sure you want to exit? Press {0} for yes, any other key to continue playing.";

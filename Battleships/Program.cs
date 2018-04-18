@@ -16,10 +16,10 @@ namespace Battleships
         {
             IUnityContainer dependencyInection = UnityDependencyInjection();
 
-            IBotGamePlay botPlay = dependencyInection.Resolve<BotGamePlay>();
-            botPlay.Run();
-            //IEngine engine = dependencyInection.Resolve<Engine>();
-            //engine.Run();
+            //IBotGamePlay botPlay = dependencyInection.Resolve<BotGamePlay>();
+            //botPlay.Run();
+            IEngine engine = dependencyInection.Resolve<Engine>();
+            engine.Run();
         }
         private static IUnityContainer UnityDependencyInjection()
         {
@@ -43,6 +43,10 @@ namespace Battleships
             dependencyInjection.RegisterType<IGameInitializationStrategy, GameInitializationStrategy>();
             dependencyInjection.RegisterType<IHelpers, Helpers>();
 
+            //AutoPlay
+            //dependencyInjection.RegisterType<IBotGame, BotGame>();
+            dependencyInjection.RegisterType<IBotGamePlay, BotGamePlay>();
+
             //Commands
             dependencyInjection.RegisterType<IProcessCommandStrategy, ShowCommand>("Show");
             dependencyInjection.RegisterType<IProcessCommandStrategy, ShootCommand>("Shoot");
@@ -53,9 +57,6 @@ namespace Battleships
             dependencyInjection.RegisterType<IProcessCommandStrategy, InvalidCommand>("Invalid");
             dependencyInjection.RegisterType<IProcessCommandStrategy, AutoPlayCommand>("AutoPlay");
 
-            //AutoPlay
-            //dependencyInjection.RegisterType<IBotGame, BotGame>();
-            dependencyInjection.RegisterType<IBotGamePlay, BotGamePlay>();
 
             return dependencyInjection;
         }
